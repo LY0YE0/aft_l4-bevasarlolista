@@ -5,8 +5,14 @@
 package aft_l4.bevasarlolista;
 
 import java.awt.Button;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +23,8 @@ import javax.swing.table.TableCellRenderer;
  * @author PC
  */
 public class Frame extends javax.swing.JFrame {
+
+    JButton button = new JButton();
 
     /**
      * Creates new form Frame
@@ -33,11 +41,57 @@ public class Frame extends javax.swing.JFrame {
 
         ArrayList<Termek> termekek = bevasarloLista.getTermekek();
 
+        vegosszeg.setText(String.valueOf(bevasarloLista.getVegosszeg()));
+
         for (int i = 0; i < termekek.size(); i++) {
             model.addRow(new Object[]{termekek.get(i).getNev(), termekek.get(i).getLeiras(), termekek.get(i).isHutes(), termekek.get(i).getDarab(), termekek.get(i).getEgysegar()});
         }
-        
-        model.addRow(new Object[]{"", "", "","", ""});
+
+        model.addRow(new Object[]{"", "", "", "", "", new JButton("DD")});
+
+        table.getColumn("Opciók").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Opciók").setCellEditor(new ButtonEditor(new JCheckBox()));
+
+        button.addActionListener(
+                new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                JOptionPane.showMessageDialog(null, "Do you want to modify this line?");
+            }
+        }
+        );
+    }
+
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "Modify" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+
+        private String label;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected, int row, int column) {
+            label = (value == null) ? "Modify" : value.toString();
+            button.setText(label);
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            return new String(label);
+        }
     }
 
     /**
@@ -52,7 +106,7 @@ public class Frame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        vegosszeg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bevásárlólista");
@@ -75,7 +129,7 @@ public class Frame extends javax.swing.JFrame {
 
         jLabel1.setText("Végösszeg:");
 
-        jLabel2.setText("jLabel2");
+        vegosszeg.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,7 +140,7 @@ public class Frame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(vegosszeg, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -96,7 +150,7 @@ public class Frame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)))
+                    .addComponent(vegosszeg)))
         );
 
         pack();
@@ -139,8 +193,8 @@ public class Frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable table;
+    private javax.swing.JLabel vegosszeg;
     // End of variables declaration//GEN-END:variables
 }
