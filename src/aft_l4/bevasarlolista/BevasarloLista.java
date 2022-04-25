@@ -5,6 +5,7 @@
 package aft_l4.bevasarlolista;
 
 import java.util.*;
+import aft_l4.bevasarlolista.*;
 
 /**
  *
@@ -28,7 +29,8 @@ public class BevasarloLista {
     }
 
     public ArrayList<Termek> rendezes() {
-        //todo minden meghívásra változik hogy növekvő vagy csökkenő
+        
+        //Collections.sort(termekek, NevComparator);
         return null;
     }
 
