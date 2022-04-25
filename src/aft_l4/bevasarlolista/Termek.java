@@ -4,6 +4,8 @@
  */
 package aft_l4.bevasarlolista;
 
+import java.util.Objects;
+
 /**
  *
  * @author Dani
@@ -17,6 +19,28 @@ public class Termek {
     private boolean hutes; //true -> kell hűteni
     private int darab;
     private int egysegar;
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.nev);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Termek other = (Termek) obj;
+        return Objects.equals(this.nev, other.nev);
+    }
 
     //id autoincrement
     public Termek(String nev, String leiras, boolean hutes, int darab, int egysegar) {
