@@ -47,18 +47,16 @@ public class Frame extends javax.swing.JFrame {
             model.addRow(new Object[]{termekek.get(i).getNev(), termekek.get(i).getLeiras(), termekek.get(i).isHutes(), termekek.get(i).getDarab(), termekek.get(i).getEgysegar()});
         }
 
-        model.addRow(new Object[]{"", "", "", "", "", new JButton("DD")});
+        model.addRow(new Object[]{"", "", "", "", ""});
 
         table.getColumn("Opciók").setCellRenderer(new ButtonRenderer());
         table.getColumn("Opciók").setCellEditor(new ButtonEditor(new JCheckBox()));
-
-        button.addActionListener(
-                new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                JOptionPane.showMessageDialog(null, "Do you want to modify this line?");
-            }
-        }
-        );
+        
+        button.addActionListener((ActionEvent event) -> {
+            System.out.println(event.getSource());
+            System.out.println(model.getValueAt(model.getRowCount()-1, 0));
+            //JOptionPane.showMessageDialog(null, "Do you want to modify this line?");
+        });
     }
 
     class ButtonRenderer extends JButton implements TableCellRenderer {
@@ -67,9 +65,10 @@ public class Frame extends javax.swing.JFrame {
             setOpaque(true);
         }
 
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null) ? "Modify" : value.toString());
+            setText((value == null) ? "Levétel" : value.toString());
             return this;
         }
     }
@@ -82,6 +81,7 @@ public class Frame extends javax.swing.JFrame {
             super(checkBox);
         }
 
+        @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
             label = (value == null) ? "Modify" : value.toString();
@@ -89,6 +89,7 @@ public class Frame extends javax.swing.JFrame {
             return button;
         }
 
+        @Override
         public Object getCellEditorValue() {
             return new String(label);
         }
