@@ -20,7 +20,7 @@ public class BevasarloLista {
     }
 
     public void hozzaAd(Termek t) {
-
+         termekek.add(t);
     }
 
     public void torol(int t_id) {
