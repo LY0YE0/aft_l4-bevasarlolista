@@ -24,7 +24,7 @@ public class BevasarloLista {
     }
 
     public void torol(int t_id) {
-
+        termekek.remove(t_id);
     }
 
     public ArrayList<Termek> rendezes() {
