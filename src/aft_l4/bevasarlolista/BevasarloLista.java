@@ -21,7 +21,7 @@ public class BevasarloLista {
     }
 
     public void hozzaAd(Termek t) {
-         termekek.add(t);
+        termekek.add(t);
     }
 
     public void torol(int t_id) {
@@ -29,12 +29,18 @@ public class BevasarloLista {
     }
 
     public ArrayList<Termek> rendezes() {
-        
+
         //Collections.sort(termekek, NevComparator);
         return null;
     }
 
     public int getVegosszeg() {
+        int sum = 0;
+        int temp = 0;
+        for (Termek termek : termekek) {
+            temp = termek.getDarab()*termek.getEgysegar();
+            sum += temp;
+        }
         return vegosszeg;
     }
 
