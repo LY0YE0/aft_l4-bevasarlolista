@@ -5,7 +5,6 @@
 package aft_l4.bevasarlolista;
 
 import java.util.*;
-import aft_l4.bevasarlolista.*;
 
 /**
  *
@@ -14,7 +13,6 @@ import aft_l4.bevasarlolista.*;
 public class BevasarloLista {
 
     private ArrayList<Termek> termekek = new ArrayList<>();
-    private int vegosszeg;
 
     public ArrayList<Termek> getTermekek() {
         return termekek;
@@ -36,12 +34,10 @@ public class BevasarloLista {
 
     public int getVegosszeg() {
         int sum = 0;
-        int temp = 0;
         for (Termek termek : termekek) {
-            temp = termek.getDarab()*termek.getEgysegar();
-            sum += temp;
+            sum += termek.getDarab()*termek.getEgysegar();
         }
-        return vegosszeg;
+        return sum;
     }
 
 }
