@@ -37,7 +37,7 @@ public class Frame extends javax.swing.JFrame {
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-        BevasarloLista bevasarloLista = new BevasarloLista();
+        BevasarloLista bevasarloLista = Singleton.getInstance();
         bevasarloLista.hozzaAd(new Termek("Kenyér", "", false, 1, 2000));
         bevasarloLista.hozzaAd(new Termek("Sör", "", true, 20, 300));
         bevasarloLista.hozzaAd(new Termek("Kenyér", "", false, 1, 2000));
@@ -54,13 +54,11 @@ public class Frame extends javax.swing.JFrame {
 
         //table.getColumn("Opciók").setCellRenderer(new ButtonRenderer());
         //table.getColumn("Opciók").setCellEditor(new ButtonEditor(new JCheckBox()));
-
 //        button.addActionListener((ActionEvent event) -> {
 //            System.out.println(event.getSource());
 //            System.out.println(model.getValueAt(model.getRowCount() - 1, 0));
 //            //JOptionPane.showMessageDialog(null, "Do you want to modify this line?");
 //        });
-
         ButtonColumn buttonColumn = new ButtonColumn(table, delete, 5);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
     }
@@ -71,6 +69,13 @@ public class Frame extends javax.swing.JFrame {
             JTable table = (JTable) e.getSource();
             int modelRow = Integer.valueOf(e.getActionCommand());
             ((DefaultTableModel) table.getModel()).removeRow(modelRow);
+            BevasarloLista lista = Singleton.getInstance();
+            lista.torol(modelRow);
+            for (Termek termek : lista.getTermekek()) {
+
+                System.out.println("ID: " + termek.getId());
+            }
+
         }
     };
 
