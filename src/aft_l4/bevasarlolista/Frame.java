@@ -34,9 +34,10 @@ public class Frame extends javax.swing.JFrame {
         ArrayList<Termek> termekek = bevasarloLista.getTermekek();
 
         for (int i = 0; i < termekek.size(); i++) {
-            System.out.println(termekek.get(i).getNev());
             model.addRow(new Object[]{termekek.get(i).getNev(), termekek.get(i).getLeiras(), termekek.get(i).isHutes(), termekek.get(i).getDarab(), termekek.get(i).getEgysegar()});
         }
+        
+        model.addRow(new Object[]{"", "", "","", ""});
     }
 
     /**
