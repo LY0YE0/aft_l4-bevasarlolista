@@ -8,7 +8,10 @@ import java.awt.Button;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -44,20 +47,32 @@ public class Frame extends javax.swing.JFrame {
         vegosszeg.setText(String.valueOf(bevasarloLista.getVegosszeg()));
 
         for (int i = 0; i < termekek.size(); i++) {
-            model.addRow(new Object[]{termekek.get(i).getNev(), termekek.get(i).getLeiras(), termekek.get(i).isHutes(), termekek.get(i).getDarab(), termekek.get(i).getEgysegar()});
+            model.addRow(new Object[]{termekek.get(i).getNev(), termekek.get(i).getLeiras(), termekek.get(i).isHutes(), termekek.get(i).getDarab(), termekek.get(i).getEgysegar(), "Levétel"});
         }
 
-        model.addRow(new Object[]{"", "", "", "", ""});
+        model.addRow(new Object[]{"", "", "", "", "", "Hozzáadás"});
 
-        table.getColumn("Opciók").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Opciók").setCellEditor(new ButtonEditor(new JCheckBox()));
-        
-        button.addActionListener((ActionEvent event) -> {
-            System.out.println(event.getSource());
-            System.out.println(model.getValueAt(model.getRowCount()-1, 0));
-            //JOptionPane.showMessageDialog(null, "Do you want to modify this line?");
-        });
+        //table.getColumn("Opciók").setCellRenderer(new ButtonRenderer());
+        //table.getColumn("Opciók").setCellEditor(new ButtonEditor(new JCheckBox()));
+
+//        button.addActionListener((ActionEvent event) -> {
+//            System.out.println(event.getSource());
+//            System.out.println(model.getValueAt(model.getRowCount() - 1, 0));
+//            //JOptionPane.showMessageDialog(null, "Do you want to modify this line?");
+//        });
+
+        ButtonColumn buttonColumn = new ButtonColumn(table, delete, 5);
+        buttonColumn.setMnemonic(KeyEvent.VK_D);
     }
+
+    Action delete = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JTable table = (JTable) e.getSource();
+            int modelRow = Integer.valueOf(e.getActionCommand());
+            ((DefaultTableModel) table.getModel()).removeRow(modelRow);
+        }
+    };
 
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
